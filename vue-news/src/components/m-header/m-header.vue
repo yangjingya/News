@@ -49,6 +49,7 @@ export default {
                 display inline-block
                 font-size $font-size-large-x
                 font-weight 700
+                font-family 'STHeiti', 'Microsoft YaHei', 'Helvetica', 'Arial', sans-serif
             .icon-refresh
                 display inline-block
                 font-size 16px
