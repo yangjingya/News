@@ -9,9 +9,9 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-// Vue.use(VueLazyLoad,{
-//   loading:require('common/image/default.png')
-// })
+Vue.use(VueLazyLoad,{
+  loading:require('common/image/default.png')
+})
 
 import "common/stylus/index.styl"
 

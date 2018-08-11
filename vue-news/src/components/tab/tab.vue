@@ -28,7 +28,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
     @import '~common/stylus/variable'
     .tab
-        position absolute
+        position fixed
         left 0
         right 0
         bottom 0
@@ -36,6 +36,8 @@
         display flex
         font-size $font-size-medium
         border-top 1px solid rgb(221,221,221)
+        z-index 200
+        background white
         .tab-item
             flex 1
             text-align center

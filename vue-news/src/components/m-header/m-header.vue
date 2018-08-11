@@ -25,11 +25,13 @@ export default {
     @import "~common/stylus/variable"
 
     .top-bar
-        position relative
+        position fixed
         background $color-theme
         color $color-font
         height 44px
+        width 100%
         display flex
+        z-index 200
         .top-message
             flex 0 0 30px
             display inline-block
