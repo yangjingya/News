@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <guide-bar @select="selectItem"></guide-bar>
-        <news-list :data="news"></news-list>
+        <news-list :data="news" :classify="classify" @refreshNews="refreshNews" @loadNews="loadNews"></news-list>
     </div>
 </template>
 
@@ -12,15 +12,17 @@
     export default{
         data(){
             return{
-                news:[]
+                news:[],
+                classify:{}
             }
         },
         created() {
             this.firstTime=true
             if(this.firstTime){
-                getNews('__all__','A1E5DBA65D86AB0','5B6D863A2BF07E1','1533897250').then((res)=>{
+                getNews('__all__','A1E5DBA65D86AB0','5B6D863A2BF07E1').then((res)=>{
                     this.news=res.data
-                    console.log(this.news)
+                    console.log(res)
+                    this.classify={tag: '__all__',as:'A1E5DBA65D86AB0',cp:'5B6D863A2BF07E1',text:'推荐'}
                 })
             } 
             this.firstTime=false
@@ -28,15 +30,20 @@
         methods:{
             selectItem(item){
                 this.news=[]
-                if(item.time!=""){
-                    getNews(item.tag,item.as,item.cp,item.time).then((res)=>{
-                       this.news=res.data
-                    })
-                }else{
-                    getNews(item.tag,item.as,item.cp,0).then((res)=>{
-                        this.news=res.data
-                    }) 
-                }   
+                this.classify=item
+                getNews(item.tag,item.as,item.cp).then((res)=>{
+                    this.news=res.data
+                })
+            },
+            refreshNews(item){
+                getNews(item.tag,item.as,item.cp).then((res)=>{
+                    this.news=this.news.concat(res.data)
+                })
+            },
+            loadNews(item){
+                getNews(item.tag,item.as,item.cp).then((res)=>{
+                    this.news=res.data
+                })
             }
         },
         components:{

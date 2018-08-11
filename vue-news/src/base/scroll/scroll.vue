@@ -31,6 +31,10 @@ export default {
             type:Boolean,
             default:false
         },//开启上拉刷新
+        pulldown:{
+            type:Boolean,
+            default:false
+        },
         refreshDelay:{
             type:Number,
             default:20
@@ -62,6 +66,12 @@ export default {
                     if(this.scroll.y<=(this.scroll.maxScrollY+50)){
                         this.$emit('scrollToEnd')
                     }
+                })
+            }
+
+            if(this.pulldown){
+                this.scroll.on('scrollStart',()=>{
+                    this.$emit('loadNews')
                 })
             }
         },
