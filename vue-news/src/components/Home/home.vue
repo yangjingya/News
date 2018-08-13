@@ -4,7 +4,13 @@
         <transition name="loadNews">
             <div class="loadNewsLength" v-show="showFlag">为您推荐了{{loadNewsLength}}篇文章</div>
         </transition>
-        <news-list ref="newsList" :classify="classify" @refreshNews="refreshNews" @loadNews="loadNews"></news-list>
+        <news-list ref="newsList" 
+                   :classify="classify"
+                    @refreshNews="refreshNews"
+                    @loadNews="loadNews" 
+                    @selectNews="selectNews">
+        </news-list>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -40,11 +46,18 @@
                 this.classify=item
                 getNews(item.tag,item.as,item.cp).then((res)=>{
                     this.news=res.data
+                    console.log(this.news)
                     this.loadNewsLength=res.data.length
                     this.setNews(this.news)
                     this.$refs.newsList.scrollTo()
                 })
                 this._show()
+            },
+            selectNews(newsDetail){
+                this.setNewsDetail(newsDetail)
+                this.$router.push({
+                    path:`/home/${newsDetail.id}`
+                })
             },
             refreshNews(item){
                 getNews(item.tag,item.as,item.cp).then((res)=>{
@@ -90,6 +103,7 @@
             },
             ...mapMutations({
                 setNews:'SET_NEWS',
+                setNewsDetail:'SET_NEWS_DETAIL'
             })
         },
         components:{

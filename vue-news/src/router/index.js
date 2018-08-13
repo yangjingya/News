@@ -5,7 +5,7 @@ import Home from 'components/home/home'
 import Favourite from 'components/favourite/favourite'
 import Media from 'components/media/media'
 import Mine from 'components/mine/mine'
-
+import NewsDetail from 'base/news-detail/news-detail'
 
 Vue.use(Router)
 
@@ -17,7 +17,11 @@ export default new Router({
     },
     {
       path: '/home',
-      component: Home
+      component: Home,
+      children:[{
+        path:':id',
+        component:NewsDetail
+      }]
     },
     {
       path:'/favourite',

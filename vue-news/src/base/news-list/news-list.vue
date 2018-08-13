@@ -2,7 +2,7 @@
     <div class="newsWrapper">
         <scroll ref="newsList" class="newsList" :data="news" :pulldown="pulldown" @loadNews="loadNews">
             <ul class="news" ref="newsGroup">
-                <li class="newsItem" v-for="item in news">
+                <li class="newsItem" v-for="item in news" @click="selectItem(item)">
                     <h1 class="news_title">{{item.title}}</h1>
                     <div v-show="item.image_list.length>0" class="img_div">
                         <img :src="img.url" v-for="img in item.image_list" class="img_item">
@@ -14,7 +14,7 @@
                         <span class="datetime">{{item.datetime|dateFormat}}</span>
                     </div>
                 </li>
-                <div @click="refreshNews" class="showLoading">点击加载更多</div>
+                <div @click="refreshNews" class="showLoading" v-show="news.length>0">点击加载更多</div>
             </ul>
         </scroll>
     </div>
@@ -24,6 +24,7 @@
 <script type="text/ecmascript-6">
     import Scroll from 'base/scroll/scroll'
     import {mapActions,mapGetters} from 'vuex'
+    import News from 'common/js/news'
     import moment from 'moment'
 
     export default{
@@ -51,12 +52,14 @@
             },
             scrollTo(){
                 this.$refs.newsList.scrollTo(0,0,0)
+            },
+            selectItem(item){
+                this.$emit('selectNews',new News({id:item.tag_id,title:item.title,content:item.abstract,imgs:item.image_list,tags:item.keywords}))
             }
         },
         computed:{
             ...mapGetters([
-                'news',
-                'loadNewsLength'
+                'news'
             ])
         },
         components:{
