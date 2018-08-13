@@ -57,10 +57,9 @@
                 flex-shrink 0
                 flex-basis 60px
                 font-size $font-size-medium-x
-        .item_active
-            color:red
-            font-weight 600
-    
+                color rgba(0,0,0,0.8)
+            .item_active
+                color:#f85959
 </style>
 
 

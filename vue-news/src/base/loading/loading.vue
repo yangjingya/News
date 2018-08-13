@@ -18,6 +18,7 @@
   @import "~common/stylus/variable"
 
   .loading
+    position relative
     width: 100%
     text-align: center
     .desc
