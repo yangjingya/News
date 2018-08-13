@@ -1,5 +1,5 @@
 const state={
-    news:{}
+    news:[]
 }
 
 export default state

@@ -1,7 +1,7 @@
 <template>
-    <scroll class="newsList"  :data="data" :pullup="pullup" :pulldown="pulldown" @scrollToEnd="refreshNews" @loadNews="loadNews">
+    <scroll ref="newsList" class="newsList" :pulldown="pulldown" @loadNews="loadNews">
         <ul class="news">
-            <li class="newsItem" v-for="item in data">
+            <li class="newsItem" v-for="item in news" ref="newsGroup">
                 <h1 class="news_title">{{item.title}}</h1>
                 <div v-show="item.image_list.length>0" class="img_div">
                     <img :src="img.url" v-for="img in item.image_list" class="img_item">
@@ -12,7 +12,7 @@
                     <span class="datetime">{{item.datetime|dateFormat}}</span>
                 </div>
             </li>
-            <loading></loading>
+            <div class="showLoading" @click="refreshNews">加载更多</div>
         </ul>
     </scroll>
     
@@ -20,8 +20,7 @@
 
 <script type="text/ecmascript-6">
     import Scroll from 'base/scroll/scroll'
-    import Loading from 'base/loading/loading'
-    import {mapActions} from 'vuex'
+    import {mapActions,mapGetters} from 'vuex'
     import moment from 'moment'
 
     export default{
@@ -32,10 +31,6 @@
             }
         },
         props:{
-            data:{
-                type:Array,
-                default:[]
-            },
             classify:{
                 type:Object,
                 default:{}
@@ -49,13 +44,22 @@
                 this.$emit('loadNews',this.classify)
             }
         },
+        computed:{
+            ...mapGetters([
+                'news'
+            ])
+        },
         components:{
-            Scroll,
-            Loading
+            Scroll
         },
         filters:{
             dateFormat(time){
                 return moment(time).startOf('mimute').fromNow()
+            }
+        },
+        watch:{
+            news(){
+                this.$refs.newsList.refresh()
             }
         }
     }
@@ -68,7 +72,7 @@
         position absolute
         top 84px
         width 100%
-        height 80%
+        margin-bottom 50px
         .news
             .newsItem
                 margin 0 20px
@@ -91,6 +95,12 @@
                     .datetime
                         position absolute
                         right 25px
+            .showLoading
+                text-align center
+                height 40px
+                line-height 40px
+                font-size 16px
+                color rgba(0,0,0,0.6)
 
                         
                             

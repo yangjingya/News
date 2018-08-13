@@ -27,10 +27,10 @@ export default {
             type:Boolean,
             default:false
         },
-        pullup:{
-            type:Boolean,
-            default:false
-        },//开启上拉刷新
+        // pullup:{
+        //     type:Boolean,
+        //     default:false
+        // },//开启上拉刷新
         pulldown:{
             type:Boolean,
             default:false
@@ -61,17 +61,22 @@ export default {
                 })
             }
 
-            if(this.pullup){
-                this.scroll.on('scrollEnd',()=>{
-                    if(this.scroll.y<=(this.scroll.maxScrollY+50)){
-                        this.$emit('scrollToEnd')
-                    }
-                })
-            }
+            // if(this.pullup){
+            //     this.scroll.on('scrollEnd',()=>{
+            //         console.log(this.scroll.maxScrollY)
+            //         if(this.scroll.y<=(this.scroll.maxScrollY+100)){
+            //             this.$emit('scrollToEnd')
+            //         }
+            //     })
+            // }
 
             if(this.pulldown){
-                this.scroll.on('scrollStart',()=>{
-                    this.$emit('loadNews')
+                this.scroll.on('touchend',(pos)=>{
+                    if(pos.y>50){
+                        this.$emit('loadNews')
+                    }else{
+                        this.refresh()
+                    }
                 })
             }
         },
