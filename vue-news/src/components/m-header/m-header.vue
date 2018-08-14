@@ -6,7 +6,7 @@
         <div class="title">
             <div>
                 <h1 class="text">今日头条</h1>
-                <i class="icon-refresh" :class="Loop"></i>
+                <i class="icon-reload" :class="Loop"></i>
             </div>
         </div>
         <router-link  to="/search" tag="div" class="search">
@@ -49,7 +49,7 @@ export default {
             width 30px
             height 32px
             margin-left 24px
-            font-size 20px
+            font-size 24px
         .title
             flex 1
             display inline-block
@@ -61,11 +61,11 @@ export default {
                 font-size $font-size-large-x
                 font-weight 700
                 font-family 'STHeiti', 'Microsoft YaHei', 'Helvetica', 'Arial', sans-serif
-            .icon-refresh
+            .icon-reload
                 display inline-block
-                font-size 16px
+                font-size 18px
                 &.play
-                    animation: rotate 1s linear infinite
+                    animation: rotate 0.6s linear infinite
                 &.pause
                     animation-play-state: paused
         .search 
@@ -76,7 +76,7 @@ export default {
             width 30px
             height 32px
             margin-right 14px
-            font-size 20px
+            font-size 28px
     @keyframes rotate
         0%
             transform: rotate(0)

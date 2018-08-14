@@ -2,7 +2,7 @@
     <div class="newsWrapper">
         <div class="newsList">
             <ul class="news">
-                <li class="newsItem" v-for="item in news">
+                <li class="newsItem" v-for="item in news" @click="selectItem"> 
                     <h1 class="news_title">{{item.title}}</h1>
                     <div v-show="item.image_list.length>0" class="img_div">
                         <img v-lazy="img.url" v-for="img in item.image_list" class="img_item">
@@ -30,6 +30,11 @@
                 default:[]
             }
         },
+        methods:{
+            selectItem(){
+                this.$emit('selectItem')
+            }
+        },
         filters:{
             dateFormat
         }
@@ -42,6 +47,8 @@
     .newsWrapper
         position relative
         width 100%
+        border-bottom 1px solid rgba(0,0,0,0.3)
+        margin-bottom 20px
         .newsList
             height 100%
             overflow hidden

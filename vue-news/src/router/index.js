@@ -6,6 +6,7 @@ import Favourite from 'components/favourite/favourite'
 import Media from 'components/media/media'
 import Mine from 'components/mine/mine'
 import NewsDetail from 'base/news-detail/news-detail'
+import DownLoad from 'base/download/download'
 
 Vue.use(Router)
 
@@ -20,7 +21,13 @@ export default new Router({
       component: Home,
       children:[{
         path:':id',
-        component:NewsDetail
+        component:NewsDetail,
+        children:[
+          {
+            path:'downLoad',
+            component:DownLoad
+          }
+        ]
       }]
     },
     {

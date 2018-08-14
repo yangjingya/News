@@ -22,21 +22,21 @@
                 <div class="tagsWrapper">
                     <span v-for="item in tags" class="tags">{{item}}</span>
                 </div>
-                <div class="favourite">
-                    
+                <div class="favourite">  
                     <span class="collect">
-                        <i class="icon-favourite"></i>
+                        <i class="icon-not-favourite"></i>
                     </span>
                 </div>
-                <div class="Hot">
-                    <span>热门推荐</span>
-                    <hot-list :news="hotNews"></hot-list>
+                <div class="recommend">
+                    <h1 class="recommendTitle">热门推荐</h1>
+                    <hot-list :news="hotNews" @selectItem="selectItem"></hot-list>
                 </div>
-                <div class="Guess">
-                    <span>猜你喜欢</span>
-                    <hot-list :news="guessNews"></hot-list>
+                <div class="recommend">
+                    <h1 class="recommendTitle">猜你喜欢</h1>
+                    <hot-list :news="guessNews" @selectItem="selectItem"></hot-list>
                 </div>
             </div>
+            <router-view></router-view>
         </div>
     </transition>
 </template>
@@ -62,6 +62,9 @@
         methods:{
             goBack(){
                 this.$router.back()
+            },
+            selectItem(){
+                this.$router.push(`/home/${this.newsDetail.id}/downLoad`)
             }
         },
         computed:{
@@ -164,7 +167,7 @@
                 width 100%
                 display flex
                 flex-wrap wrap
-                justify-content space-between
+                flex-direction row
                 padding-bottom 10px
                 margin-bottom 20px
                 border-bottom 1px dotted rgba(0,0,0,0.3)
@@ -172,15 +175,23 @@
                     border 1px solid #ccc
                     padding 8px
                     border-radius 20px
-                    margin 4px 0
+                    margin 4px 5px
             .favourite
                 text-align center
                 height 40px
                 line-height 40px
                 .collect
-                    .icon-favourite
+                    .icon-not-favourite,.icon-favourite
                         font-size 28px
+                    .icon-favourite
                         color red
+            .recommend
+                .recommendTitle
+                    font-size 18px
+                    line-height 18px
+                    font-weight 600
+                    border-left 4px solid #f85959
+                    padding-left 10px
             
                 
                 
