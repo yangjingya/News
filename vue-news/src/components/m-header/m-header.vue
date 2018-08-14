@@ -6,7 +6,7 @@
         <div class="title">
             <div>
                 <h1 class="text">今日头条</h1>
-                <i class="icon-refresh"></i>
+                <i class="icon-refresh" :class="Loop"></i>
             </div>
         </div>
         <router-link  to="/search" tag="div" class="search">
@@ -16,8 +16,17 @@
 </template>
 
 <script type="text/ecmascript-6">
+import animations from 'create-keyframe-animation'
+import {mapGetters} from 'vuex'
 export default {
-    
+    computed:{
+        Loop(){
+            return this.refresh? 'play':'pause' 
+        },
+        ...mapGetters([
+            'refresh'
+        ])
+    }
 }
 </script>
 
@@ -55,6 +64,10 @@ export default {
             .icon-refresh
                 display inline-block
                 font-size 16px
+                &.play
+                    animation: rotate 1s linear infinite
+                &.pause
+                    animation-play-state: paused
         .search 
             flex 0 0 30px
             display inline-block
@@ -64,5 +77,9 @@ export default {
             height 32px
             margin-right 14px
             font-size 20px
-
+    @keyframes rotate
+        0%
+            transform: rotate(0)
+        100%
+            transform: rotate(360deg)
 </style>

@@ -1,6 +1,9 @@
 const state={
     news:[],
-    newsDetail:{}
+    newsDetail:{},
+    refresh:false,
+    hotNews:[],
+    guessNews:[]
 }
 
 export default state

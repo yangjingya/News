@@ -23,9 +23,9 @@
 
 <script type="text/ecmascript-6">
     import Scroll from 'base/scroll/scroll'
-    import {mapActions,mapGetters} from 'vuex'
+    import {mapMutations,mapGetters} from 'vuex'
     import News from 'common/js/news'
-    import moment from 'moment'
+    import {dateFormat} from 'common/js/jsonp'
 
     export default{
         data(){
@@ -49,13 +49,17 @@
             },
             loadNews(){
                 this.$emit('loadNews',this.classify)
+                this.setRefresh(true)
             },
             scrollTo(){
                 this.$refs.newsList.scrollTo(0,0,0)
             },
             selectItem(item){
-                this.$emit('selectNews',new News({id:item.tag_id,title:item.title,content:item.abstract,imgs:item.image_list,tags:item.keywords}))
-            }
+                this.$emit('selectNews',new News({id:item.tag_id,title:item.title,content:item.abstract,imgs:item.image_list,tags:item.keywords,dateTime:item.datetime,media:item.media_name,comment:item.comment_count}))
+            },
+            ...mapMutations({
+                setRefresh:'SET_REFRESH'
+            })
         },
         computed:{
             ...mapGetters([
@@ -66,9 +70,7 @@
             Scroll
         },
         filters:{
-            dateFormat(time){
-                return moment(time).startOf('mimute').fromNow()
-            }
+            dateFormat
         }
     }
 </script>

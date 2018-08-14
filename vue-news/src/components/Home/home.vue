@@ -17,8 +17,13 @@
 <script type="text/ecmascript-6">
     import GuideBar from 'base/guide-bar/guide-bar'
     import NewsList from 'base/news-list/news-list'
-    import {getNews} from 'api/news'
+    import {getNews,getHot} from 'api/news'
     import {mapMutations} from 'vuex'
+
+    const rec={tag: '__all__',as:'A1E5DBA65D86AB0',cp:'5B6D863A2BF07E1',text:'推荐'}
+    const hot={tag: 'news_hot',as:'A1454B767D76A52',cp:'5B6D868A75928E1',text: '热点'}
+    const guess={tag: 'news_entertainment',as:'A1750BF6CD36B47',cp:'5B6D862B84978E1',text: '娱乐'}
+
     export default{
         data(){
             return{
@@ -30,13 +35,9 @@
         },
         created() {
             this.firstTime=true
-            const item={tag: '__all__',as:'A1E5DBA65D86AB0',cp:'5B6D863A2BF07E1',text:'推荐'}
             if(this.firstTime){
-                getNews(item.tag,item.as,item.cp).then((res)=>{
-                    this.news=res.data
-                    this.setNews(this.news)
-                    this.classify=item
-                })
+                this._getRecNews()
+                this.classify=hot
             } 
             this.firstTime=false
         },
@@ -58,6 +59,8 @@
                 this.$router.push({
                     path:`/home/${newsDetail.id}`
                 })
+                this._getHotNews()
+                this._getGuessNews()
             },
             refreshNews(item){
                 getNews(item.tag,item.as,item.cp).then((res)=>{
@@ -75,7 +78,7 @@
                             return item
                         }, [])
                         this.loadNewsLength=res.data.length-index
-                        this.setNews(this.news)     
+                        this.setNews(this.news) 
                     }else{
                         this.refreshNews(item)
                     }
@@ -87,6 +90,7 @@
                 getNews(item.tag,item.as,item.cp).then((res)=>{
                     this.news=res.data
                     this.loadNewsLength=res.data.length
+                    this.setRefresh(false)
                     this.setNews(this.news)
                 })
                 this._show()
@@ -101,9 +105,30 @@
             _hide(){
                 this.showFlag=false
             },
+            _getRecNews(){
+                getNews(rec.tag,rec.as,rec.cp).then((res)=>{
+                    this.news=res.data
+                    this.setNews(this.news)    
+                })
+            },
+            _getHotNews(){
+                getNews(hot.tag,hot.as,hot.cp).then((res)=>{
+                    const hotNews=res.data
+                    this.setHotNews(hotNews)    
+                })
+            },
+            _getGuessNews(){
+                getNews(guess.tag,guess.as,guess.cp).then((res)=>{
+                    const guessNews=res.data
+                    this.setGuessNews(guessNews)    
+                })
+            },
             ...mapMutations({
                 setNews:'SET_NEWS',
-                setNewsDetail:'SET_NEWS_DETAIL'
+                setNewsDetail:'SET_NEWS_DETAIL',
+                setRefresh:'SET_REFRESH',
+                setHotNews:'SET_HOT_NEWS',
+                setGuessNews:'SET_GUESS_NEWS'
             })
         },
         components:{

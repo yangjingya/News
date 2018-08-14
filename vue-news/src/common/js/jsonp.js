@@ -1,4 +1,5 @@
 import originJsonp from 'jsonp'
+import moment from 'moment'
 
 export default function jsonp(url, data) {
   url += (url.indexOf('?') < 0 ? '?' : '&') + param(data)
@@ -21,4 +22,9 @@ export function param(data) {
     url += '&' + k + '=' + encodeURIComponent(value)
   }
   return url ? url.substring(1) : ''
+}
+
+
+export function dateFormat(time){
+  return moment(time).startOf('mimute').fromNow()
 }
