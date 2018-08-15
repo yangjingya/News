@@ -2,19 +2,19 @@
     <div class="newsWrapper">
         <scroll ref="newsList" class="newsList" :data="news" :pulldown="pulldown" @loadNews="loadNews">
             <ul class="news" ref="newsGroup">
-                <li class="newsItem" v-for="item in news" @click="selectItem(item)">
+                <li class="newsItem" v-for="item in news" @click.stop.prevent="selectItem(item)">
                     <h1 class="news_title">{{item.title}}</h1>
-                    <div v-show="item.image_list.length>0" class="img_div">
-                        <img :src="img.url" v-for="img in item.image_list" class="img_item">
+                    <div v-show="item.imgs.length>0" class="img_div">
+                        <img :src="img.url" v-for="img in item.imgs" class="img_item">
                     </div>
                     <div class="news_bottom">
                         <span v-show="item.label_style" class="label">{{item.label}}</span>
-                        <span class="media_name">{{item.media_name}}</span>
-                        <span v-show="item.comment_count>0" class="comment">评论 {{item.comment_count}}</span>
+                        <span class="media_name">{{item.media}}</span>
+                        <span v-show="item.comment_count>0" class="comment">评论 {{item.comment}}</span>
                         <span class="datetime">{{item.datetime|dateFormat}}</span>
                     </div>
                 </li>
-                <div @click="refreshNews" class="showLoading" v-show="news.length>0">点击加载更多</div>
+                <div @click="refreshNews" class="showLoading" v-show="this.news.length>0&&this.pullup">点击加载更多</div>
             </ul>
         </scroll>
     </div>
@@ -23,21 +23,24 @@
 
 <script type="text/ecmascript-6">
     import Scroll from 'base/scroll/scroll'
-    import {mapMutations,mapGetters} from 'vuex'
+    import {mapMutations} from 'vuex'
     import News from 'common/js/news'
     import {dateFormat} from 'common/js/jsonp'
 
     export default{
-        data(){
-            return{
-                pullup:true,
-                pulldown:true,
-            }
-        },
-        created(){
-            
-        },
         props:{
+            pullup:{
+                type:Boolean,
+                default:true
+            },
+            pulldown:{
+                type:Boolean,
+                default:true
+            },
+            news:{
+                type:Array,
+                default:[]
+            },
             classify:{
                 type:Object,
                 default:{}
@@ -55,16 +58,11 @@
                 this.$refs.newsList.scrollTo(0,0,0)
             },
             selectItem(item){
-                this.$emit('selectNews',new News({id:item.tag_id,title:item.title,content:item.abstract,imgs:item.image_list,tags:item.keywords,dateTime:item.datetime,media:item.media_name,comment:item.comment_count}))
+                this.$emit('selectNews',item)
             },
             ...mapMutations({
                 setRefresh:'SET_REFRESH'
             })
-        },
-        computed:{
-            ...mapGetters([
-                'news'
-            ])
         },
         components:{
             Scroll

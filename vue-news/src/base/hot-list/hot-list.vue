@@ -2,15 +2,15 @@
     <div class="newsWrapper">
         <div class="newsList">
             <ul class="news">
-                <li class="newsItem" v-for="item in news" @click="selectItem"> 
+                <li class="newsItem" v-for="item in news" @click="selectItem(item)">
                     <h1 class="news_title">{{item.title}}</h1>
-                    <div v-show="item.image_list.length>0" class="img_div">
-                        <img v-lazy="img.url" v-for="img in item.image_list" class="img_item">
+                    <div v-show="item.imgs.length>0" class="img_div">
+                        <img :src="img.url" v-for="img in item.imgs" class="img_item">
                     </div>
                     <div class="news_bottom">
                         <span class="label">打开APP</span>
-                        <span class="media_name">{{item.media_name}}</span>
-                        <span v-show="item.comment_count>0" class="comment">{{item.comment_count}}条评论</span>
+                        <span class="media_name">{{item.media}}</span>
+                        <span v-show="item.comment_count>0" class="comment">评论 {{item.comment}}</span>
                         <span class="datetime">{{item.datetime|dateFormat}}</span>
                     </div>
                 </li>

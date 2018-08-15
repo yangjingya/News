@@ -17,22 +17,24 @@
                 </div>
                 <div class="content">
                     <p class="article" >{{this.newsDetail.content}}</p>
-                    <img v-for="item in this.newsDetail.imgs" v-lazy="item.url" class="articleImg">
+                    <img v-for="item in this.newsDetail.imgs" :src="item.url" class="articleImg">
                 </div>
                 <div class="tagsWrapper">
                     <span v-for="item in tags" class="tags">{{item}}</span>
                 </div>
                 <div class="favourite">  
-                    <span class="collect">
-                        <i class="icon-not-favourite"></i>
+                    <span class="collect" @click="toggleFavourite()">
+                        <i :class="getIcon()"></i>
                     </span>
                 </div>
                 <div class="recommend">
                     <h1 class="recommendTitle">热门推荐</h1>
+                    <div v-if="hotNews.length===0" class="info">w(ﾟДﾟ)w 数据加载出错啦</div>
                     <hot-list :news="hotNews" @selectItem="selectItem"></hot-list>
                 </div>
                 <div class="recommend">
                     <h1 class="recommendTitle">猜你喜欢</h1>
+                    <div v-if="guessNews.length===0" class="info">w(ﾟДﾟ)w 数据加载出错啦</div>
                     <hot-list :news="guessNews" @selectItem="selectItem"></hot-list>
                 </div>
             </div>
@@ -42,7 +44,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-    import {mapGetters} from 'vuex'
+    import {mapGetters,mapActions} from 'vuex'
     import {dateFormat} from 'common/js/jsonp'
     import HotList from 'base/hot-list/hot-list'
 
@@ -65,13 +67,37 @@
             },
             selectItem(){
                 this.$router.push(`/home/${this.newsDetail.id}/downLoad`)
-            }
+            },
+            getIcon(){
+                if(this.IsFavourite()){
+                    return 'icon-favourite'
+                }
+                return 'icon-not-favourite'
+            },
+            IsFavourite(){
+                var index=this.favouriteNews.findIndex((item)=>{
+                    return this.newsDetail.id===item.id
+                })
+                return index>-1
+            },
+            toggleFavourite(){
+                if(this.IsFavourite()){
+                    this.deleteFavouriteNews(this.newsDetail)
+                }else{
+                    this.saveFavouriteNews(this.newsDetail)
+                }
+            },
+            ...mapActions({
+                saveFavouriteNews:'saveFavouriteNews',
+                deleteFavouriteNews:'deleteFavouriteNews'
+            })
         },
         computed:{
             ...mapGetters([
                 'newsDetail',
                 'hotNews',
-                'guessNews'
+                'guessNews',
+                'favouriteNews'
             ])
         },
         components:{
@@ -192,6 +218,12 @@
                     font-weight 600
                     border-left 4px solid #f85959
                     padding-left 10px
+                .info
+                    text-align center
+                    height 50px
+                    line-height 50px
+                    font-size 16px
+
             
                 
                 

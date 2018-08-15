@@ -1,9 +1,12 @@
+import {loadFavourite,loadHistoryNews} from 'common/js/cache'
+
 const state={
-    news:[],
     newsDetail:{},
     refresh:false,
     hotNews:[],
-    guessNews:[]
+    guessNews:[],
+    favouriteNews:loadFavourite(),
+    historyNews:loadHistoryNews()
 }
 
 export default state
