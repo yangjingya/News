@@ -5,6 +5,7 @@ import Home from 'components/home/home'
 import Favourite from 'components/favourite/favourite'
 import Media from 'components/media/media'
 import Mine from 'components/mine/mine'
+import Search from 'components/search/search'
 import NewsDetail from 'base/news-detail/news-detail'
 import DownLoad from 'base/download/download'
 
@@ -51,6 +52,10 @@ export default new Router({
     {
       path:'/mine',
       component:Mine
+    },
+    {
+      path:'/search',
+      component:Search
     }
   ]
 })

@@ -6,6 +6,9 @@ const FAVOURITE_LENGTH=200
 const HISTORYNEWS_KEY="__historynews__"
 const HISTORYNEWS_LENGTH=200
 
+const SEARCHHISTORY_KEY="__searchhistory__"
+const SEARCHHISTORY_LENGTH=20
+
 function insertArray(arr,val,compare,maxLen){
     const index=arr.findIndex(compare)
     if(index===0){
@@ -60,6 +63,28 @@ export function saveHistoryNewsIn(news){
 
 export function loadHistoryNews(){
     return storage.get(HISTORYNEWS_KEY,[])
+}
+
+export function saveSearch(search){
+    let searches=storage.get(SEARCHHISTORY_KEY,[])
+    insertArray(searches,search,(item)=>{
+        return item===search
+    },SEARCHHISTORY_LENGTH)
+    storage.set(SEARCHHISTORY_KEY,searches)
+    return searches
+}
+
+export function deleteSearch(search){
+    let searches = storage.get(SEARCHHISTORY_KEY, [])
+    deleteArray(searches, (item) => {
+        return item === search
+    })
+    storage.set(SEARCHHISTORY_KEY, searches)
+    return searches   
+}
+
+export function loadSearch(){
+    return storage.get(SEARCHHISTORY_KEY,[])
 }
 
 

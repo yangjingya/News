@@ -130,7 +130,7 @@
         0%
             transform translate3d(0,0,0)
         60%
-            transform translate(0,15px,0)
+            transform translate3d(0,15px,0)
         100%
             transform translate3d(0,30px,0)
 </style>

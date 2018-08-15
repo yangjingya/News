@@ -9,3 +9,5 @@ export const guessNews=state=>state.guessNews
 export const favouriteNews=state=>state.favouriteNews
 
 export const historyNews=state=>state.historyNews
+
+export const searchHistory=state=>state.searchHistory

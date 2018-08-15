@@ -18,6 +18,9 @@ const mutations={
     },
     [types.SET_HISTORY_NEWS](state,news){
         state.historyNews=news
+    },
+    [types.SET_SEARCH_HISTORY](state,history){
+        state.searchHistory=history
     }
 }
 

@@ -11,8 +11,8 @@
             </div>
         </div>
         <div class="wrapper">
-            <div class="barWrapper">
-                <div class="bar">消息通知
+            <div class="barWrapper" @click="toGithub">
+                <div class="bar">Github
                     <i class="icon-more"></i>
                 </div>
             </div>
@@ -47,6 +47,9 @@
                         choose:id
                     }
                 })
+            },
+            toGithub(){
+                window.open("https://github.com/yangjingya/News/tree/master/vue-news")
             }
         },
         computed:{
@@ -99,9 +102,9 @@
                     .icon-more
                         position absolute
                         right 10px
-                        top 9px
-                        font-size 28px
-                        color #999
+                        top 14px
+                        font-size 20px
+                        color rgba(0,0,0,0.3)
                 .barBottom
                     border-bottom .8px solid rgb(238,238,238)
                     

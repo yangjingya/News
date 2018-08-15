@@ -1,4 +1,4 @@
-import {loadFavourite,loadHistoryNews} from 'common/js/cache'
+import {loadFavourite,loadHistoryNews,loadSearch} from 'common/js/cache'
 
 const state={
     newsDetail:{},
@@ -6,7 +6,8 @@ const state={
     hotNews:[],
     guessNews:[],
     favouriteNews:loadFavourite(),
-    historyNews:loadHistoryNews()
+    historyNews:loadHistoryNews(),
+    searchHistory:loadSearch()
 }
 
 export default state
