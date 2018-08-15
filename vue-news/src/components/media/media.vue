@@ -3,8 +3,8 @@
         <m-header></m-header>
         <div class="videoWrapper">
             <li class="videoItem">
-                <video controls class="video" src="~common/image/media.mp4"></video>
-                <div class="title">因数据获取问题 改用固定数据</div>
+                <video controls class="video" src="~common/image/media.mp4" poster="~common/image/cover.jpg" @play="play" @ended="end"></video>
+                <div class="title" v-if="show">因数据获取问题 改用固定数据</div>
                 <div class="detail">
                     <span>今日头条</span>
                     <span>666评论</span>
@@ -55,6 +55,19 @@
     import MHeader from 'components/m-header/m-header'
 
     export default{
+        data(){
+            return{
+                show:true
+            }
+        },
+        methods:{
+            play(){
+            this.show=false
+            },
+            end(){
+                this.show=true
+            }
+        },
         components:{
             MHeader
         }
@@ -82,6 +95,7 @@
                 line-height 20px
             .video
                 width 100%
+                object-fit fill
             .detail
                 margin-top 5px
                 font-size 12px
