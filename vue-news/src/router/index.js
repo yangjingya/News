@@ -32,7 +32,17 @@ export default new Router({
     },
     {
       path:'/favourite',
-      component:Favourite
+      component:Favourite,
+      children:[{
+        path:':id',
+        component:NewsDetail,
+        children:[
+          {
+            path:'downLoad',
+            component:DownLoad
+          }
+        ]
+      }]
     },
     {
       path:'/media',

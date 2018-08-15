@@ -44,6 +44,10 @@
             classify:{
                 type:Object,
                 default:{}
+            },
+            road:{
+                type:String,
+                default:''
             }
         },
         methods:{
@@ -58,7 +62,7 @@
                 this.$refs.newsList.scrollTo(0,0,0)
             },
             selectItem(item){
-                this.$emit('selectNews',item)
+                this.$emit('selectNews',item,this.road)
             },
             ...mapMutations({
                 setRefresh:'SET_REFRESH'

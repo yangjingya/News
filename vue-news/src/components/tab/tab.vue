@@ -4,7 +4,7 @@
             <i class="icon-home"></i>
             <span class="tab-link">主页</span>
         </router-link>
-        <router-link tag="div" class="tab-item" to="/favourite">
+        <router-link tag="div" class="tab-item" :to="{path:'/favourite',query:{choose:0}}">
             <i class="icon-favourite"></i>
             <span class="tab-link">收藏</span>
         </router-link>
@@ -21,7 +21,7 @@
 
 <script type="text/ecmascript-6">
     export default{
-
+        
     }
 </script>
 

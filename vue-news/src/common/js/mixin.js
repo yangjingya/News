@@ -13,11 +13,11 @@ export const newsMixin={
         }
     },
     methods: {
-        selectNews(newsDetail){
+        selectNews(newsDetail,road){
             this.setNewsDetail(newsDetail)
             this.saveHistoryNews(newsDetail)
             this.$router.push({
-                path:`/home/${newsDetail.id}`
+                path:`/${road}/${newsDetail.id}`
             })
             this._getHotNews()
             this._getGuessNews()
@@ -49,25 +49,4 @@ export const newsMixin={
             saveHistoryNews:'saveHistoryNews'
         })
     }
-}
-
-export const reloadNews={
-    provide(){
-        return {
-          reload:this.reload
-        }
-    },
-    data(){
-        return{
-            isRouterAlive:true
-        }
-    },
-    methods:{
-        reload(){
-            this.isRouterAlive=false
-            this.$nextTick(function(){
-                this.isRouterAlive=true
-            })
-        }
-    },
 }

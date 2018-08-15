@@ -2,12 +2,12 @@
     <div class="mine">
         <div class="topWrapper">
             <div class="avatarWrapper">
-                <img src="" alt="" class="wrapper">
+                <img src="~common/image/avatar.png" class="img">
             </div>
-            <div class="name"></div>
+            <div class="name">初ゝ遇</div>
             <div>
-                <span class="choose">收藏</span>
-                <span class="choose">历史</span>
+                <span class="choose" @click="jump(0)">收藏 {{this.favouriteNews.length}}</span>
+                <span class="choose" @click="jump(1)">历史 {{this.historyNews.length}}</span>
             </div>
         </div>
         <div class="wrapper">
@@ -37,8 +37,24 @@
 </template>
 
 <script type="text/ecmascript-6">
+    import {mapGetters} from 'vuex'
     export default{
-
+        methods:{
+            jump(id){
+                this.$router.push({
+                    path:'/favourite',
+                    query:{
+                        choose:id
+                    }
+                })
+            }
+        },
+        computed:{
+            ...mapGetters([
+                'favouriteNews',
+                'historyNews'
+            ])
+        }
     }
 </script>
 
@@ -55,6 +71,20 @@
         .topWrapper
             height 35%
             color white
+            text-align center
+            .avatarWrapper
+                padding-top 20%
+                .img
+                    width 60px
+                    heigth 60px
+                    border-radius 50%
+            .name
+                margin 10px
+                font-size 20px
+                font-family "KaiTi"
+            .choose
+                font-size 16px
+                padding 10px
         .wrapper
             height 100%
             background-color rgb(238,238,238)

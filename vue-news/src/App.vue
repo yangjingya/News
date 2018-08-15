@@ -9,9 +9,25 @@
 
 <script>
 import Tab from 'components/tab/tab'
-import {reloadNews} from 'common/js/mixin'
 export default {
-  mixins:[reloadNews],
+  provide(){
+        return {
+          reload:this.reload
+        }
+    },
+    data(){
+        return{
+            isRouterAlive:true
+        }
+    },
+    methods:{
+        reload(){
+          this.isRouterAlive=false
+          this.$nextTick(function(){
+              this.isRouterAlive=true
+          })
+        }
+    },
   components:{
     Tab
   }

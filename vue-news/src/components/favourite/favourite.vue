@@ -2,16 +2,18 @@
     <div>
         <m-header></m-header>
         <div class="tab">
-            <div class="tabChoice active" @click="choose($event,0)">收藏</div>
-            <div class="tabChoice" @click="choose($event,1)">阅读</div>
+            <div class="tabChoice" :class="{'active':currentIndex===0}" @click="choose(0)">收藏</div>
+            <div class="tabChoice" :class="{'active':currentIndex===1}" @click="choose(1)">阅读</div>
         </div>
-        <news-list ref="newsList" 
+        <news-list  ref="newsList"
+                    road="favourite" 
                    :pullup="pullup"
                    :pulldown="pulldown"
                    :classify="{}"
                    :news="news"
-                    @selectNews="selectNews">
+                   @selectNews="selectNews">
         </news-list>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -20,28 +22,18 @@
     import NewsList from 'base/news-list/news-list'
     import {mapGetters} from 'vuex'
     import {newsMixin} from 'common/js/mixin'
-
     export default{
         mixins:[newsMixin],
-        inject:['reload'],
         data(){
             return{
                 pullup:false,
                 pulldown:false,
-                news:[]
+                news:[],
+                currentIndex:0
             }
         },
-        created(){
+        mounted(){
             this.news=this.favouriteNews
-        },
-        methods:{
-            choose(e,index){
-                let indexl
-                index===0?indexl=1:indexl=0
-                index===0?this.news=this.favouriteNews:this.news=this.historyNews
-                e.currentTarget.parentNode.children[index].classList.add('active')
-                e.currentTarget.parentNode.children[indexl].classList.remove('active')
-            },
         },
         computed:{
             ...mapGetters([
@@ -49,12 +41,30 @@
                 'historyNews'
             ])
         },
+        methods:{
+            choose(ch){
+                this.currentIndex=ch
+            }
+        },
         watch:{
-            favouriteNews(){
-                this.reload()
+            favouriteNews(newNews){
+                this.news=newNews
             },
-            historyNews(){
-                this.reload()
+            historyNews(newNews){
+                if(this.currentIndex===1){
+                    this.news=newNews
+                }
+            },
+            currentIndex(newIndex){
+                newIndex===0?this.news=this.favouriteNews:this.news=this.historyNews
+            },
+            $route(to,from){
+                if(typeof(to.query.choose)!=="undefined"&&this.currentIndex!=to.query.choose){
+                    this.currentIndex=to.query.choose
+                }
+                if(typeof(from.query.choose)!=="undefined"&&this.currentIndex!=from.query.choose){
+                    this.currentIndex=from.query.choose
+                }
             }
         },
         components:{

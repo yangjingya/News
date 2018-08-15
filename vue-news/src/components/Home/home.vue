@@ -5,12 +5,13 @@
         <transition name="loadNews">
             <div class="loadNewsLength" v-show="showFlag">为您推荐了{{loadNewsLength}}篇文章</div>
         </transition>
-        <news-list ref="newsList" 
+        <news-list  ref="newsList" 
+                    road="home"
                    :news="news"
                    :classify="classify"
-                    @refreshNews="refreshNews"
-                    @loadNews="loadNews" 
-                    @selectNews="selectNews">
+                   @refreshNews="refreshNews"
+                   @loadNews="loadNews" 
+                   @selectNews="selectNews">
         </news-list>
         <router-view></router-view>
     </div>
